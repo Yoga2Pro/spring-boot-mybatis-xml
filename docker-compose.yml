@@ -1,6 +1,8 @@
 version: '3.7'
 services:
   mysql:
+    # to use on Apple M1 chip, add platform
+    #platform: linux/amd64
     image: mysql:5.7
     container_name: mysql
     expose:

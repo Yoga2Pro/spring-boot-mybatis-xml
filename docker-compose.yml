@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: playground
   redis:
-    image: redis
+    image: redis:6.2.5-alpine
     expose:
       - 6379
     ports:

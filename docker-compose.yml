@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  mysql:
+#    restart: always
+    image: mysql:5.7
+    container_name: mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    privileged: true
+    environment:
+      TZ: UTC
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: playground
+  redis:
+    image: redis
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+#    restart: always
+    container_name: redis
+  java-ssm-playground:
+    #Dockerfile for java is in same folder, to build an image
+    build: .
+    #Mirror name
+    image: java-ssm-playground:test
+    container_name: java-ssm-playground
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    depends_on:
+      - mysql
+      - redis
+    links:
+      - redis:redis
+      - mysql:redis

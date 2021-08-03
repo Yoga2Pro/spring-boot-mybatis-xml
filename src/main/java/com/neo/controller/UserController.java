@@ -9,7 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
 
 @RestController
-@RequestMapping(value = "/users")     // 通过这里配置使下面的映射都在/users下
+@RequestMapping(value = "/users")
 public class UserController {
 	
 	@Autowired
@@ -22,7 +22,6 @@ public class UserController {
 	}
 	
     @GetMapping("/{id}")
-    // 指redis在partition"users"的id(key="#id"自动找input的id)下存value
     @Cacheable(value="users", key="#id")
     public User getUser(@PathVariable Long id) {
         return userMapper.getById(id);
@@ -30,7 +29,6 @@ public class UserController {
 
     @PostMapping("/")
     public String postUser(@RequestBody User user) {
-        // @RequestBody注解用来绑定通过http请求中application/json类型上传的数据
         userMapper.insert(user.getName(), user.getAge(), user.getAddress());
         return "success";
     }

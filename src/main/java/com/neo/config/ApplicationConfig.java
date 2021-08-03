@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 import java.util.concurrent.Executor;
 
 @Configuration
-@EnableCaching // 注意和redis的caching的区别
+@EnableCaching
 @Log4j2
 @MapperScan("com.neo.mapper")
 

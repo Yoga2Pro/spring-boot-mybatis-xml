@@ -1,7 +1,6 @@
 version: '3.7'
 services:
   mysql:
-#    restart: always
     image: mysql:5.7
     container_name: mysql
     expose:
@@ -19,21 +18,22 @@ services:
       - 6379
     ports:
       - 6379:6379
-#    restart: always
     container_name: redis
-  java-ssm-playground:
-    #Dockerfile for java is in same folder, to build an image
+  api:
+    # Dockerfile for app is in same folder, so use .
     build: .
-    #Mirror name
-    image: java-ssm-playground:test
-    container_name: java-ssm-playground
+    image: api
+    container_name: api
     ports:
       - "8080:8080"
     expose:
       - "8080"
+    # force container startup sequence, but no guarantee on container availability (readyness to use)
     depends_on:
       - mysql
       - redis
+    # trick to force condition check (e.g. if mysql is not ready to use, api will restart)
+    restart: on-failure
     links:
       - redis:redis
       - mysql:redis

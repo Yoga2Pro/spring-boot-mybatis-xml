@@ -22,9 +22,9 @@ public class UserController {
 	}
 	
     @GetMapping("/{id}")
-    @Cacheable(value="users", key="#id")
+    @Cacheable(value="users", key="#id", unless="#result == null")
     public User getUser(@PathVariable Long id) {
-        return userMapper.getById(id);
+	    return userMapper.getById(id);
     }
 
     @PostMapping("/")

@@ -5,37 +5,23 @@ services:
     #platform: linux/amd64
     image: mysql:5.7
     container_name: mysql
-    expose:
-      - 3306
     ports:
       - 3306:3306
-    privileged: true
     environment:
       TZ: UTC
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: playground
   redis:
     image: redis:6.2.5-alpine
-    expose:
-      - 6379
     ports:
       - 6379:6379
     container_name: redis
   api:
-    # Dockerfile for app is in same folder, so use .
+    # Dockerfile for the java app "api" is in same folder, so use .
     build: .
     image: api
     container_name: api
     ports:
       - "8080:8080"
-    expose:
-      - "8080"
-    # force container startup sequence, but no guarantee on container availability (readyness to use)
-    depends_on:
-      - mysql
-      - redis
-    # trick to force condition check (e.g. if mysql is not ready to use, api will restart)
+    # trick to force condition check (if mysql/redis are not ready yet, api will restart until they are ready)
     restart: on-failure
-    links:
-      - redis:redis
-      - mysql:redis

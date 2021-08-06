@@ -1,9 +1,7 @@
 package com.neo.mapper;
 
 import java.util.List;
-
 import com.neo.model.User;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {

@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Async("UserThreadPoolExecutor")
-    public void addUser(User user) {
-        userMapper.insert(user.getName(), user.getAge(), user.getAddress());
+    public void addUser(Long id, User user) {
+        userMapper.insert(id, user.getName(), user.getAge(), user.getAddress());
     }
 
     @Async("UserThreadPoolExecutor")

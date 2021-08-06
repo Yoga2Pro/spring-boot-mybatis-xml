@@ -14,7 +14,7 @@ public interface UserMapper {
 
 	User getByName(@Param("name") String name);
 
-	void insert(@Param("name") String name, @Param("age") Integer age, @Param("address") String address);
+	void insert(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age, @Param("address") String address);
 
 	void update(@Param("id") Long id, @Param("name") String name, @Param("age") Integer age, @Param("address") String address);
 

@@ -30,8 +30,8 @@
     </select>
 
     <insert id="insert" parameterType="com.neo.model.User" >
-        INSERT INTO users (name,age,address)
-        VALUES (#{name}, #{age}, #{address})
+        INSERT INTO users (id, name,age,address)
+        VALUES (#{id}, #{name}, #{age}, #{address})
     </insert>
     
     <update id="update" parameterType="com.neo.model.User" >

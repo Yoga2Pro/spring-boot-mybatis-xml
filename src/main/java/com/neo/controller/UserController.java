@@ -24,7 +24,7 @@ public class UserController {
 	}
 	
     @GetMapping("/{id}")
-    @Cacheable(value="users", key="#id", unless="#result == null")
+    @Cacheable(cacheNames ="users", key="'userId-' + #id", unless="#result == null")
     public User getUser(@PathVariable Long id) {
 	    return userService.getUser(id);
     }
@@ -36,14 +36,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @CacheEvict(value="users", key="#id")
+    @CacheEvict(cacheNames ="users", key="'userId-' + #id")
     @Async("UserThreadPoolExecutor")
     public void updateUser(@PathVariable Long id, @RequestBody User user) {
         userService.updateUser(id, user);
     }
 
     @DeleteMapping("/{id}")
-    @CacheEvict(value="users", key="#id")
+    @CacheEvict(cacheNames ="users", key="'userId-' + #id")
     @Async("UserThreadPoolExecutor")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

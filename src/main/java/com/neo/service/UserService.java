@@ -9,7 +9,7 @@ public interface UserService {
 
     User getUser(Long id);
 
-    void addUser(User user);
+    void addUser(Long id, User user);
 
     void updateUser(Long id, User user);
 

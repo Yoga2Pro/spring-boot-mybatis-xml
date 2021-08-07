@@ -3,12 +3,15 @@ package com.neo.controller;
 import java.util.List;
 
 import com.neo.service.UserService;
+import com.neo.service.WorkerNodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 import com.neo.model.User;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.CacheEvict;
+
+import javax.annotation.Resource;
 
 
 @RestController
@@ -17,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private WorkerNodeService workerNodeService;
 
     @GetMapping("/")
 	public List<User> getAllUsers() {
@@ -32,7 +37,8 @@ public class UserController {
     @PostMapping("/")
     @Async("UserThreadPoolExecutor")
     public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+        long id = workerNodeService.genUid();
+        userService.addUser(id, user);
     }
 
     @PutMapping("/{id}")

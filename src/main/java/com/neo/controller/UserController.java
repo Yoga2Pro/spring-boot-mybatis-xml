@@ -18,35 +18,37 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-	public List<User> getAllUsers() {
-		return userService.getAllUsers();
+    @GetMapping("/listAllUsers")
+	public List<User> listAllUsers() {
+		return userService.list();
 	}
-	
-    @GetMapping("/{id}")
-    @Cacheable(cacheNames ="users", key="'userId-' + #id", unless="#result == null")
-    public User getUser(@PathVariable Long id) {
-	    return userService.getUser(id);
+
+    @PostMapping("/addUser")
+    //@Async("UserThreadPoolExecutor")
+    public String addUser(@RequestBody User user) {
+        userService.save(user);
+        return "success";
     }
 
-    @PostMapping("/")
-    @Async("UserThreadPoolExecutor")
-    public void addUser(@RequestBody User user) {
-        userService.addUser(user);
+    @GetMapping("/{id}")
+    @Cacheable(cacheNames ="users", key="'userId-' + #id", unless="#result == null")
+    public User getUserById(@PathVariable Long id) {
+	    return userService.getById(id);
     }
 
     @PutMapping("/{id}")
     @CacheEvict(cacheNames ="users", key="'userId-' + #id")
     @Async("UserThreadPoolExecutor")
-    public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        userService.updateUser(id, user);
+    public void updateUserById(@PathVariable Long id, @RequestBody User user) {
+        user.setId(id);
+        userService.updateById(user);
     }
 
     @DeleteMapping("/{id}")
     @CacheEvict(cacheNames ="users", key="'userId-' + #id")
     @Async("UserThreadPoolExecutor")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public void deleteUserById(@PathVariable Long id) {
+        userService.removeById(id);
     }
     
 }

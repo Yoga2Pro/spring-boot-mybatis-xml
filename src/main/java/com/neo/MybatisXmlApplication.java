@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
-//@MapperScan("com.neo.mapper")
+@MapperScan("com.neo.mapper")
 public class MybatisXmlApplication {
 
 	public static void main(String[] args) {

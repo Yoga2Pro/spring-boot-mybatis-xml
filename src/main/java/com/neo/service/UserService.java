@@ -1,18 +1,8 @@
 package com.neo.service;
 
 import com.neo.model.User;
-import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 
-public interface UserService {
-
-    List<User> getAllUsers();
-
-    User getUser(Long id);
-
-    void addUser(User user);
-
-    void updateUser(Long id, User user);
-
-    void deleteUser(Long id);
+public interface UserService extends IService<User> {
 
 }
